@@ -1,11 +1,20 @@
 
 import React from 'react';
 import { sampleLearningModules } from '@/utils/sampleData';
-import { Star, Lock, ArrowRight } from 'lucide-react';
+import { Star, Lock, ArrowRight, Wallet, Book, TrendingUp, DollarSign, PiggyBank } from 'lucide-react';
 
 const LearningHub: React.FC = () => {
   // Calculate streak (simulated)
   const currentStreak = 3;
+  
+  // Map for module icons
+  const iconMap = {
+    Wallet: Wallet,
+    Book: Book, 
+    TrendingUp: TrendingUp,
+    DollarSign: DollarSign,
+    PiggyBank: PiggyBank
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -61,7 +70,8 @@ const LearningHub: React.FC = () => {
         <h3 className="text-lg font-medium">Modules</h3>
         
         {sampleLearningModules.map((module) => {
-          const ModuleIcon = require('lucide-react')[module.icon];
+          // Use the icon map to get the appropriate icon component
+          const ModuleIcon = iconMap[module.icon as keyof typeof iconMap] || Book;
           
           return (
             <div 
