@@ -1,10 +1,3 @@
-Then refer to `df["category"]`. | One-liner; future files with, say, `CATEGORY` or ` Category ` will still work. Recommended. |
-
----
-
-### Minimal patch for your `streamlit_app.py`
-
-```python
 import streamlit as st
 import pandas as pd
 
@@ -15,13 +8,13 @@ uploaded = st.file_uploader("Upload a CSV of your transactions")
 if uploaded:
     df = pd.read_csv(uploaded)
 
-    # 👇 add this line
+    # normalise headers once so any mix of 'Category', ' category ', etc. works
     df.columns = df.columns.str.strip().str.lower()
 
     st.subheader("Preview")
     st.dataframe(df.head())
 
-    st.subheader("Top categories")
+    st.subheader("Top categories (by number of transactions)")
     top = (
         df["category"]
         .value_counts()
