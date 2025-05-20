@@ -1,16 +1,23 @@
-# streamlit_app.py
+Then refer to `df["category"]`. | One-liner; future files with, say, `CATEGORY` or ` Category ` will still work. Recommended. |
+
+---
+
+### Minimal patch for your `streamlit_app.py`
+
+```python
 import streamlit as st
 import pandas as pd
 
 st.set_page_config(page_title="SmartSpend – Fin Friend", page_icon="💸")
-
 st.title("SmartSpend – Fin Friend")
-st.write("👋 Upload a bank-statement CSV and I’ll give you a quick spending overview.")
 
-# —— Minimal MVP —— #
-uploaded = st.file_uploader("Upload a CSV export of your transactions")
+uploaded = st.file_uploader("Upload a CSV of your transactions")
 if uploaded:
     df = pd.read_csv(uploaded)
+
+    # 👇 add this line
+    df.columns = df.columns.str.strip().str.lower()
+
     st.subheader("Preview")
     st.dataframe(df.head())
 
